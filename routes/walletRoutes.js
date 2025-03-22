@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Wallet = require('../models/walletSchema'); // Adjust the path as necessary
-
 const Web3 = require('web3');
-
 // Connect to the Ethereum network (e.g., using Infura)
 const web3 = new Web3('https://mainnet.infura.io/v3/abc4d5d4470e4548be3599ac5e85a19e');
 
