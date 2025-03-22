@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Wallet = require('../models/wallet'); // Adjust the path as necessary
+const Wallet = require('../models/walletSchema'); // Adjust the path as necessary
 
 // Route to add a new wallet address
 router.post('/add-wallet', async (req, res) => {
