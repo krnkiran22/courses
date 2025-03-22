@@ -7,12 +7,9 @@ const courseRoutes = require('../routes/courseRoutes');
 const app = express();
 app.use(express.json());
 app.use(cors());
-
+const MONGO_URI = "mongodb+srv://kirandev2210:kirankiran@nambathan.1c8b9.mongodb.net/?retryWrites=true&w=majority&appName=nambathan";
 // MongoDB Connection
-mongoose.connect("mongodb+srv://kirandev2210:kirankiran@nambathan.1c8b9.mongodb.net/?retryWrites=true&w=majority&appName=nambathan", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected'))
+mongoose.connect(MONGO_URI).then(() => console.log('MongoDB connected'))
   .catch(err => console.error(err));
 
 app.use('/api/courses', courseRoutes);
