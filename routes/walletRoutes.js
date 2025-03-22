@@ -1,26 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const Wallet = require('../models/walletSchema'); // Adjust the path as necessary
-const Web3 = require('web3');
-// Connect to the Ethereum network (e.g., using Infura)
-const web3 = new Web3('https://mainnet.infura.io/v3/abc4d5d4470e4548be3599ac5e85a19e');
+const Web3 = require('web3'); 
+const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/abc4d5d4470e4548be3599ac5e85a19e'));
 
 // Function to get wallet balance
 async function getWalletBalance(walletAddress) {
-  try {
-    // Get the balance in Wei
-    const balanceWei = await web3.eth.getBalance(walletAddress);
-    // Convert the balance to Ether
-    const balanceEther = web3.utils.fromWei(balanceWei, 'ether');
-    return balanceEther;
-  } catch (error) {
-    console.error('Error retrieving wallet balance:', error);
-    throw error;
+    try {
+      const balanceWei = await web3.eth.getBalance(walletAddress);
+      const balanceEther = web3.utils.fromWei(balanceWei, 'ether');
+      return balanceEther;
+    } catch (error) {
+      console.error('Error retrieving wallet balance:', error);
+      throw error;
+    }
   }
-}
-
-
-
 // Route to add a new wallet address and its balance
 router.post('/add-wallet', async (req, res) => {
   const { walletAddress } = req.body;
