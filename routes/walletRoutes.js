@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Wallet = require('../models/wallet'); // Adjust the path as necessary
+const Wallet = require('../models/walletSchema'); // Adjust the path as necessary
 
 const Web3 = require('web3');
 
