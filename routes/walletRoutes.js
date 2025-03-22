@@ -1,21 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Wallet = require('../models/walletSchema'); // Adjust the path as necessary
-const Web3 = require('web3'); 
-const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/abc4d5d4470e4548be3599ac5e85a19e'));
+const Wallet = require('../models/wallet'); // Adjust the path as necessary
 
-// Function to get wallet balance
-async function getWalletBalance(walletAddress) {
-    try {
-      const balanceWei = await web3.eth.getBalance(walletAddress);
-      const balanceEther = web3.utils.fromWei(balanceWei, 'ether');
-      return balanceEther;
-    } catch (error) {
-      console.error('Error retrieving wallet balance:', error);
-      throw error;
-    }
-  }
-// Route to add a new wallet address and its balance
+// Route to add a new wallet address
 router.post('/add-wallet', async (req, res) => {
   const { walletAddress } = req.body;
 
@@ -30,14 +17,11 @@ router.post('/add-wallet', async (req, res) => {
       return res.status(409).json({ message: 'Wallet address already exists.' });
     }
 
-    // Retrieve the wallet balance
-    const balance = await getWalletBalance(walletAddress);
-
-    // Create a new wallet entry with the balance
-    const newWallet = new Wallet({ walletAddress, balance });
+    // Create a new wallet entry
+    const newWallet = new Wallet({ walletAddress });
     await newWallet.save();
 
-    res.status(201).json({ message: 'Wallet address and balance added successfully.', wallet: newWallet });
+    res.status(201).json({ message: 'Wallet address added successfully.', wallet: newWallet });
   } catch (error) {
     res.status(500).json({ message: 'Server error.', error });
   }
